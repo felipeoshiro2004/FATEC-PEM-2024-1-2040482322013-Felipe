@@ -1,0 +1,103 @@
+#include <stdio.h>
+#define preta 1
+#define branca 2
+#define rei 0
+#define dama 1
+#define torre 2
+#define bispo 3
+#define cavalo 4
+#define peao 5
+
+int ocupacao[8][8];
+int pecas[8][8];
+
+int valores[] = {1, 9, 5, 3, 3, 1};
+
+
+
+void monta_ocupacao(){
+    for(int i = 0; i < 8; i++){
+        for(int j = 0; j < 8; j++){
+            if(i <= 1){
+                ocupacao[i][j] = preta;    
+            }
+            else if(i >= 6){
+                ocupacao[i][j] = branca;
+            }
+
+
+
+            if(i == 0 || i == 7){
+                if(j == 0 || j == 7){
+                    pecas[i][j] = torre;
+                }
+                else if(j == 1 || j == 6){
+                    pecas[i][j] = cavalo;
+                }
+                else if(j == 2 || j == 5){
+                    pecas[i][j] = bispo;
+                }
+                else if(j == 4){
+                    pecas[i][j] = rei;
+                }
+                else{   
+                    pecas[i][j] = dama;
+                }
+
+            }
+            else if(i == 1 || i == 6){
+                pecas[i][j] = peao;
+            }
+
+            else{
+                ocupacao[i][j] = 0;
+            }
+        }
+    }
+    char c;
+    int contRepetidas[8];
+    for(int i = 0; i < 8; i++){
+
+        for(int j = 0; j < 8; j++){
+            contRepetidas[j] = 1;
+        }
+
+        for(int j = 0; j < 8; j++){
+            if(ocupacao[i][j] > 0){
+                (ocupacao[i][j] == preta)? printf(" P"):printf(" B");
+                switch(pecas[i][j]){
+                    case rei:
+                        printf("R");
+                        break;
+                    case dama:
+                        printf("D");
+                        break;
+                    case torre:
+                        printf("T");
+                        break;
+                    case bispo:
+                        printf("B");
+                        break;
+                    case cavalo:
+                        printf("C");
+                        break;
+                    case peao:
+                        printf("P");
+                        break;
+                }
+                printf("%d",contRepetidas[pecas[i][j]]++);
+            }
+            else{
+                printf(" XXX");
+            }
+        }
+        printf("\n");
+    }
+}
+
+
+
+int main(){
+    monta_ocupacao();
+    return 0;
+}
